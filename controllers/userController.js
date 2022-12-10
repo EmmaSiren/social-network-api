@@ -1,4 +1,3 @@
-const { application } = require('express');
 const { User, Thought } = require('../models');
 
 module.exports = {
@@ -31,10 +30,10 @@ module.exports = {
       { $set: req.body },
       { runValidators: true, new: true }
     )
-      .then((thought) => 
-        !thought
+      .then((user) => 
+        !user
           ? res.status(404).json({message: 'No user with that ID'})
-          : res.json(application)
+          : res.json(user)
       )
       .catch((err) => {
         console.log(err);
