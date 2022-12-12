@@ -12,7 +12,7 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      // getter method to format timestamp
+      get: timestamp => new Date().toLocaleDateString(timestamp, {month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "numeric"})
     },
     username: {
       type: String,
@@ -23,6 +23,7 @@ const thoughtSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
+      getters: true,
     },
     id: false,
   }
