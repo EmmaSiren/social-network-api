@@ -1,12 +1,14 @@
 const { Thought, User} = require('../models');
 
 module.exports = {
+  // GETs all thoughts using find method
   getThoughts(req,res) {
     Thought.find()
       .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
   },
 
+  // GETs a single thought using findOne method and thoughtId in url
   getSingleThought(req,res) {
     Thought.findOne({ _id: req.params.thoughtId})
       .then((thought) => 
@@ -17,12 +19,13 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
+  // POSTs a new thought using create method and JSON body
   createThought(req,res) {
     Thought.create(req.body)
       .then((thought) => {
         return User.findOneAndUpdate(
           {_id: req.body.userId},
-          {$addToSet: {thoughts: thought._id}},
+          {$push: {thoughts: thought._id}},
           {new: true}
         );
       })
@@ -37,6 +40,7 @@ module.exports = {
       });
   },
 
+  // PUTs updated thought using findOneAndUpdate method and thoughtId in url
   updateThought(req,res) {
     Thought.findOneAndUpdate(
       {_id: req.params.thoughtId},
@@ -54,6 +58,7 @@ module.exports = {
       });
   },
 
+  // DELETEs thought using findOneAndRemove method and thoughtId in url
   deleteThought(req,res) {
     Thought.findOneAndRemove({_id: req.params.thoughtId})
       .then((thought) => 
@@ -67,16 +72,18 @@ module.exports = {
       )
       .then((user) =>
         !user
-          ? res.status(404).json({message: 'Thought created but no user with this id!'})
+          ? res.status(404).json({message: 'Thought deleted but no user with this id!'})
           : res.json({message: 'Thought successfully deleted!'})
       )
       .catch((err) => res.status(500).json(err));
   },
 
+  // POSTs reaction using findOneAndUpdate method and thoughtId in url and JSON body
+  // Updates thought to include the reaction
   addReaction(req,res) {
     Thought.findOneAndUpdate(
       {_id: req.params.thoughtId},
-      {$addToSet: {reaction: req.body}},
+      {$addToSet: {reactions: req.body}},
       {runValidators: true, new: true}
     )
       .then((thought) =>
@@ -87,10 +94,11 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
+  // DELETEs reaction using findOneAndUpdate method and thoughtId and reactionId in url
   removeReaction(req,res) {
     Thought.findOneAndUpdate(
       {_id: req.params.thoughtId},
-      {$pull: {reaction: {reactionId: req.params.reactionId}}},
+      {$pull: {reactions: {reactionId: req.params.reactionId}}},
       {runValidators: true, new: true}
     )
       .then((thought) => 

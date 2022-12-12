@@ -6,7 +6,7 @@ const reactionSchema = new Schema(
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
-    reactionbody: {
+    reactionBody: {
       type: String,
       required: true,
       max_length: 280,
@@ -22,9 +22,6 @@ const reactionSchema = new Schema(
     },
   },
   {
-    toJSON: {
-      getters: true,
-    },
     id: false,
   }
 );
