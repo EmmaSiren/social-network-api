@@ -18,4 +18,4 @@ As this was an application with no starter code it was a very exciting opportuni
 ## **Installation & Usage**
 Initiate Node by running ‘npm i’ in the GitBash terminal. Once all packages have been installed run ‘npm run start’ command to start up the server. Now go to Insomnia and test out the various GET, POST, PUT, and DELETE routes for Users and Thoughts including Friends and Reactions. See below for walkthrough video.
 
-Please visit [LINK] to view a walkthrough of the app’s functionality on Insomnia. 
+[Walkthrough Video](https://drive.google.com/file/d/1Xueh6g-EO57A4PajEyYSZ-EisOsVMuQm/view?usp=sharing)
